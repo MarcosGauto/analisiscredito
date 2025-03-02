@@ -3,6 +3,8 @@ const router = express.Router();
 const balanceController = require("../controllers/balance.controller"); // Corrige el nombre y ruta
 const checkJwt = require("../middlewares/auth0.middleware");
 
+console.log(balanceController);
+
 
 // Rutas para manejar los balances
 router.post("/", checkJwt, balanceController.createBalance);  // Solo usuarios autenticados pueden crear balances
@@ -15,3 +17,5 @@ router.delete("/:id", checkJwt, balanceController.deleteBalance); // Solo usuari
 router.get("/:id/pdf", balanceController.getBalancePdf);
 
 module.exports = router;
+
+

@@ -63,4 +63,4 @@ const getBalancePdf = async (req, res) => {
 };
 
 
-module.exports = { createBalance, getBalances, getBalance, updateBalance, deleteBalance };
+module.exports = { createBalance, getBalances, getBalance, updateBalance, deleteBalance,getBalancePdf };
