@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
 
-const balanceSchema = new mongoose.Schema({
+const BalanceSchema = new mongoose.Schema({
     fecha: Date,
     ingresos: Number,
     egresos: Number,
     activos: Number,
     pasivos: Number,
-});
+},{ timestamps: true });
 
-const Balance = mongoose.model("Balance", balanceSchema);
-module.exports = Balance;
+module.exports = mongoose.model("Balance", BalanceSchema);

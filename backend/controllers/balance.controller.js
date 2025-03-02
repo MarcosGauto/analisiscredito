@@ -1,25 +1,29 @@
 const Balance = require("../models/balance.model"); // Ruta relativa al controlador
+const generatePdf = require("../utils/pdfGenerator");
+
 
 
 const createBalance = async (req, res) => {
     try {
         const { fecha, ingresos, egresos, activos, pasivos } = req.body;
         const balance = new Balance({ fecha, ingresos, egresos, activos, pasivos });
-        await balance, save();
+        await balance.save();
         res.status(201).json(balance);
     } catch (error) {
-        resizeTo.status(400).json({ message: error.message })
+        res.status(400).json({ message: error.message })
+
+
     }
 }
 
-const getBalances = async (req, res) => {
+    const getBalances = async (req, res) => {
     try {
-        const balances = await Balance.find();
-        res.status(200).json(balances);
+        const balances = await Balance.find(); // 👈 Obtiene los balances de la BD
+        res.json(balances);
     } catch (error) {
-        res.status(400).json({ message: error.message })
+        res.status(500).json({ error: "Error obteniendo balances" });
     }
-}
+};
 
 const getBalance = async (req, res) => {
     try {

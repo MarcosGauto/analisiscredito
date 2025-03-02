@@ -1,12 +1,12 @@
-require("dotenv").config(); // Cargar las variables de entorno al inicio
+require("dotenv").config({ path: ".env.local" });
 
 const express = require("express");
 const mongoose = require("mongoose");
 
-console.log("🔍 MONGO_URL:", process.env.MONGO_URL); // Verifica que la variable se cargue correctamente
-
 const app = express();
 app.use(express.json());
+
+
 
 const mongoURI = process.env.MONGO_URL || process.env.DATABASE_URL;
 
@@ -16,7 +16,8 @@ if (!mongoURI) {
 }
 
 mongoose
-    .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+
+    .connect(mongoURI)
     .then(() => console.log("🔥 Conectado a MongoDB"))
     .catch((err) => console.error("❌ Error conectando a MongoDB:", err));
 
