@@ -1,11 +1,9 @@
 const mongoose = require("mongoose");
 
 const BalanceSchema = new mongoose.Schema({
-    fecha: Date,
-    ingresos: Number,
-    egresos: Number,
-    activos: Number,
-    pasivos: Number,
-},{ timestamps: true });
+    nombre: String,
+    monto: Number,
+    fecha: Date
+});
 
 module.exports = mongoose.model("Balance", BalanceSchema);

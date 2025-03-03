@@ -16,24 +16,27 @@ const createBalance = async (req, res) => {
     }
 }
 
-    const getBalances = async (req, res) => {
+
+const getBalances = async (req, res) => {
     try {
-        const balances = await Balance.find(); // 👈 Obtiene los balances de la BD
-        res.json(balances);
+        const balances = await Balance.find();
+        res.status(200).json(balances);
     } catch (error) {
-        res.status(500).json({ error: "Error obteniendo balances" });
+        res.status(400).json({ message: error.message });
     }
 };
 
 const getBalance = async (req, res) => {
     try {
         const balance = await Balance.findById(req.params.id);
-        if (!balance) return res.status(404).json({ message: " Balance no encontrado" });
+        if (!balance) return res.status(404).json({ message: "Balance no encontrado" });
         res.status(200).json(balance);
     } catch (error) {
-        res.status(400).json({ message: error.message })
+        res.status(400).json({ message: error.message });
     }
-}
+};
+
+module.exports = { getBalances, getBalance };
 
 const updateBalance = async (req, res) => {
     try {
@@ -52,8 +55,6 @@ const deleteBalance = async (req, res) => {
         res.status(404).json({ message: error.message })
     }
 }
-
-const generatePdf = require("../utils/pdfGenerator");
 
 const getBalancePdf = async (req, res) => {
     try {
