@@ -4,18 +4,26 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 const balanceRoutes = require("./routes/balance.routes")
+const documentRoutes = require("./routes/document.routes")
+const cors = require("cors");
 
 const app = express();
+app.use(cors({
+    origin: 'http://localhost:3000', // URL de tu frontend
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type'],
+}));
 app.use(express.json());
 
 app.use("/api/balances", balanceRoutes);
+app.use("api/documents", documentRoutes);
+
+
 
 app.use((req, res, next) => {
     console.log(`📢 Petición recibida: ${req.method} ${req.url}`);
     next();
 });
-
-app.use("/api/balances", balanceRoutes);
 
 
 const mongoURI = process.env.MONGO_URL || process.env.DATABASE_URL;
