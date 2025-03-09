@@ -1,45 +1,24 @@
-import { NextResponse } from "next/server"
+import { NextResponse } from "next/server";
 
-// Asegurarse de que la función GET sea asíncrona y use la estructura correcta
-export async function GET(req, context) {
+export async function GET(req, { params }) {
     try {
-        const cuit = context.params.cuit
+        const { cuit } = params;
+        const API_URL = `https://api.bcra.gob.ar/centraldedeudores/v1.0/Deudas/${cuit}`;
 
-        // Simular delay de red
-        await new Promise((resolve) => setTimeout(resolve, 1000))
+        console.log(`🔍 Consultando CUIT: ${cuit}`);
 
-        // Validar formato de CUIT
-        if (!/^\d{11}$/.test(cuit)) {
-            return new NextResponse(JSON.stringify({ error: "Formato de CUIT inválido" }), {
-                status: 400,
-                headers: { "Content-Type": "application/json" },
-            })
-        }
-
-        // Llamada al backend para obtener los datos del BCRA
-        const res = await  fetch(`https://api.bcra.gob.ar/centraldedeudores/v1.0/Deudas/${cuit}`);
+        const res = await fetch(API_URL, { method: "GET" });
 
         if (!res.ok) {
-            const errorData = await res.json()
-            return new NextResponse(JSON.stringify({ error: errorData.error || "No se pudo obtener la información" }), {
-                status: res.status,
-                headers: { "Content-Type": "application/json" },
-            })
+            return NextResponse.json({ error: "No se encontraron datos" }, { status: res.status });
         }
 
-        // Obtener los datos de la respuesta
-        const data = await res.json()
+        const data = await res.json();
 
-        // Retornar los datos obtenidos
-        return new NextResponse(JSON.stringify(data), {
-            status: 200,
-            headers: { "Content-Type": "application/json" },
-        })
+        return NextResponse.json(data, { status: 200 });
+
     } catch (error) {
-        console.error("Error al obtener datos del BCRA:", error)
-        return new NextResponse(JSON.stringify({ error: "Error interno del servidor" }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
-        })
+        console.error("❌ Error al obtener datos del BCRA:", error);
+        return NextResponse.json({ error: "Error interno del servidor" }, { status: 500 });
     }
 }
