@@ -1,0 +1,28 @@
+# Ignorar credenciales y archivos sensibles
+.env
+firebaseServiceAccount.json
+
+# Ignorar módulos de Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Ignorar caché y archivos de configuración del sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de compilación y dependencias de Next.js
+.next/
+out/
+
+# Ignorar logs y caché de la aplicación
+logs/
+*.log
+*.lock
+debug.log
+error.log
+
+# Ignorar archivos de Git relacionados con paquetes y compilaciones
+package-lock.json
+yarn.lock
