@@ -14,6 +14,15 @@ export function CreditInfo({ cuit }) {
     const [bankData, setBankData] = useState(null)
     const [qualificationData, setQualificationData] = useState(null)
 
+    const periodos = creditData?.results?.periodos || [];
+    const entidades = periodos?.[0]?.entidades || [];
+    const situacionMaxima = entidades.length > 0 
+        ? Math.max(...entidades.map(e => e.situacion)) 
+        : null;
+    const totalMonto = entidades.reduce((sum, e) => sum + e.monto, 0);
+    const diasAtraso = entidades.reduce((sum, e) => sum + e.diasAtrasoPago,0)
+
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -66,12 +75,13 @@ export function CreditInfo({ cuit }) {
                     <dl className="space-y-2">
                         <div>
                             <dt className="text-sm text-muted-foreground">Denominación</dt>
-                            <dd className="font-medium">{creditData.denominacion}</dd>
+                            <dd className="font-medium">{creditData.results?.denominacion}</dd>
                         </div>
                         <div>
-                            <dt className="text-sm text-muted-foreground">Fecha de Situación</dt>
-                            <dd className="font-medium">{creditData.fechaSituacion}</dd>
+                            <dt className="text-sm text-muted-foreground">Situación maxima con entidades</dt>
+                            <dd className="font-medium">{situacionMaxima !== null ? `Situacion ${situacionMaxima}` : "No disponible"} </dd>
                         </div>
+
                     </dl>
                 </InfoCard>
 
@@ -79,11 +89,11 @@ export function CreditInfo({ cuit }) {
                     <dl className="space-y-2">
                         <div>
                             <dt className="text-sm text-muted-foreground">Monto</dt>
-                            <dd className="font-medium">{formatCurrency(creditData.monto)}</dd>
+                            <dd className="font-medium">{formatCurrency(totalMonto)}</dd>
                         </div>
                         <div>
                             <dt className="text-sm text-muted-foreground">Días de Atraso</dt>
-                            <dd className="font-medium">{creditData.diasAtraso}</dd>
+                            <dd className="font-medium">{diasAtraso}</dd>
                         </div>
                     </dl>
                 </InfoCard>

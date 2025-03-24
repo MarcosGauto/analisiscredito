@@ -14,9 +14,9 @@ const mockDatabase = {
     },
 }
 
-export async function GET(req, context) {
+export async function GET(req, params) {
     try {
-        const cuit = context.params.cuit
+        const cuit = params.cuit // No es necesario usar `await`
 
         // Simular delay de red
         await new Promise((resolve) => setTimeout(resolve, 800))
@@ -52,4 +52,3 @@ export async function GET(req, context) {
         })
     }
 }
-

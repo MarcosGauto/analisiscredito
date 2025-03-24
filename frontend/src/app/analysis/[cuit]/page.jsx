@@ -1,8 +1,12 @@
+'use client';
+
+import { useParams } from 'next/navigation';
 import { PersonTypeSelector } from "@/components/Person-type-selector";
 import { CreditInfo } from "@/components/Credit-info";
 
-export default async function AnalysisPage({ params }) {
-    const cuit = params?.cuit; // Esperamos a que params esté disponible
+export default function AnalysisPage() {
+    const params = useParams();
+    const { cuit } = params;
 
     if (!cuit) {
         return <div>Error: No se proporcionó un CUIT válido.</div>;
