@@ -10,7 +10,7 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Analisis Crediticio</title>
       </head>
-      <body className="antialiased">
+      <body className="antialiased bg-gray-200 text-gray-800">
         {children}  {/* El contenido de la página se inyecta aquí */}
       </body>
     </html>

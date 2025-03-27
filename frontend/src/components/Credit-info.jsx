@@ -30,6 +30,7 @@ export function CreditInfo({ cuit }) {
                     fetch(`/api/bcra/${cuit}`),
                     fetch(`/api/bank/${cuit}`),
                     fetch(`/api/qualification/${cuit}`),
+                    fetch(`/api/cheques/${cuit}`),
                 ])
 
                 const creditData = await creditResponse.json()
@@ -57,6 +58,9 @@ export function CreditInfo({ cuit }) {
         return <div>No se encontró información para el CUIT proporcionado</div>
     }
 
+    const chequeRechazados = creditData.causales?.some(causal =>
+        causal.entidades?.some(entidad =>entidad.detalle?.length > 0)
+    )
     const totalDisponible = bankData.saldoCuenta + bankData.valoresCartera
 
     // Datos de ejemplo para los indicadores
@@ -105,8 +109,8 @@ export function CreditInfo({ cuit }) {
                             <dd className="font-medium">{creditData.situacionJuridica}</dd>
                         </div>
                         <div>
-                            <dt className="text-sm text-muted-foreground">Proceso Judicial</dt>
-                            <dd className="font-medium">{creditData.procesoJudicial ? "Sí" : "No"}</dd>
+                            <dt className="text-sm text-muted-foreground">Cheques rechazados</dt>
+                            <dd className="font-medium">{chequeRechazados ? "Sí" : "No"}</dd>
                         </div>
                     </dl>
                 </InfoCard>
@@ -115,7 +119,7 @@ export function CreditInfo({ cuit }) {
             <div className="grid gap-4 md:grid-cols-2">
                 <Card className="md:col-span-2">
                     <CardHeader>
-                        <CardTitle className="text-lg">Información Bancaria</CardTitle>
+                        <CardTitle className="text-lg">Información GBP</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

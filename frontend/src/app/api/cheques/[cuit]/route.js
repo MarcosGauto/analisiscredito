@@ -29,11 +29,12 @@ export async function GET(req, context) {
         });
 
         // BCRA API URL
-        const apiUrl = `/centraldedeudores/v1.0/Deudas/ChequesRechazados/{Identificacion}${cuit}`;
-        console.log("API URL:", apiUrl);
+        const apiUrlcheque = `https://api.bcra.gob.ar/centraldedeudores/v1.0/Deudas/ChequesRechazados/${cuit}`;
+        
+        console.log("API URL:", apiUrlcheque);
 
         // Make the API request
-        const response = await fetch(apiUrl, {
+        const response = await fetch(apiUrlcheque, {
             agent, // Use the HTTPS agent
             headers: { "Content-Type": "application/json" },
         });
